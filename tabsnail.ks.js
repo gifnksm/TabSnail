@@ -1,10 +1,9 @@
 var PLUGIN_INFO =
   <KeySnailPlugin>
     <name>TabSnail</name>
-    <description>Rapid switching between tabs with shortcut keys.</description>
     <description>Manipulate tabs with keysnail</description>
     <description lang="ja">キーボードでタブを操作</description>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <updateURL>http://github.com/gifnksm/TabSnail/raw/master/tabsnail.ks.js</updateURL>
     <author mail="makoto.nksm@gmail.com" homepage="http://d.hatena.ne.jp/gifnksm/">gifnksm</author>
     <license>The MIT License</license>
@@ -163,6 +162,16 @@ key.setViewKey(['t', 't'], function (ev, arg) {
 </KeySnailPlugin>;
 
 
+// ChangeLog
+//
+// ==== 1.0.1 (2010/09/10) ====
+//
+// * Fix PLUGIN_INFO
+//
+// ==== 1.0.0 (2010/09/09) ====
+//
+// * First release
+//
 
 
 const tstEnabled = 'TreeStyleTabService' in window;
