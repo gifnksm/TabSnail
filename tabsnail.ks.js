@@ -3,7 +3,7 @@ var PLUGIN_INFO =
     <name>TabSnail</name>
     <description>Manipulate tabs with keysnail</description>
     <description lang="ja">キーボードでタブを操作</description>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <updateURL>http://github.com/gifnksm/TabSnail/raw/master/tabsnail.ks.js</updateURL>
     <author mail="makoto.nksm@gmail.com" homepage="http://d.hatena.ne.jp/gifnksm/">gifnksm</author>
     <license>The MIT License</license>
@@ -40,15 +40,15 @@ var PLUGIN_INFO =
 >||
 key.setViewKey(['U'], function (ev, arg) {
     ext.exec("tst-select-parent-tab", arg, ev);
-}, '親タブを選択する', true);
+}, '親タブを選択する');
 
 key.setViewKey(['t', '^'], function (ev, arg) {
     ext.exec("tst-select-first-child-tab", arg, ev);
-}, '最初の子タブを選択する', true);
+}, '最初の子タブを選択する');
 
 key.setViewKey(['t', '$'], function (ev, arg) {
     ext.exec("tst-select-last-child-tab", arg, ev);
-}, '最後の子タブを選択する', true);
+}, '最後の子タブを選択する');
 
 key.setViewKey('^', function (ev, arg) {
     ext.exec("tst-select-first-sibling-tab", arg, ev);
@@ -60,31 +60,31 @@ key.setViewKey('$', function (ev, arg) {
 
 key.setViewKey('H', function (ev, arg) {
     ext.exec("tst-select-previous-sibling-tab", arg, ev);
-}, '前の兄弟タブを選択する', true);
+}, '前の兄弟タブを選択する');
 
 key.setViewKey('L', function (ev, arg) {
     ext.exec("tst-select-next-sibling-tab", arg, ev);
-}, '次の兄弟タブを選択する', true);
+}, '次の兄弟タブを選択する');
 
 key.setViewKey(['t', 'p'], function (ev, arg) {
     ext.exec("tst-read-selected-tab-later", arg, ev);
-}, '選択中のタブを後回しにする', true);
+}, '選択中のタブを後回しにする');
 
 key.setGlobalKey('C-P', function (ev, arg) {
     ext.exec('tst-move-selected-tab-left', arg, ev);
-}, '選択中のタブを左へ移動する', true);
+}, '選択中のタブを左へ移動する');
 
 key.setGlobalKey('C-N', function (ev, arg) {
     ext.exec('tst-move-selected-tab-right', arg, ev);
-}, '選択中のタブを右へ移動する', true);
+}, '選択中のタブを右へ移動する');
 
 key.setGlobalKey('C-B', function (ev, arg) {
     ext.exec("tst-promote-tab", arg, ev);
-}, '選択中のタブを1つ上の階層に移動する', true);
+}, '選択中のタブを1つ上の階層に移動する');
 
 key.setGlobalKey('C-F', function (ev, arg) {
     ext.exec("tst-demote-tab", arg, ev);
-}, '選択中のタブを1つ下の階層に移動する', true);
+}, '選択中のタブを1つ下の階層に移動する');
 
 key.setViewKey(['t', 'SPC'], function (ev, arg) {
     ext.exec("tst-toggle-collapse-expand-tree", arg, ev);
@@ -104,15 +104,15 @@ key.setViewKey(['t', 't'], function (ev, arg) {
 >||
 key.setViewKey(['U'], function (ev, arg) {
     ext.exec("tst-select-parent-tab", arg, ev);
-}, 'Select parent tab', true);
+}, 'Select parent tab');
 
 key.setViewKey(['t', '^'], function (ev, arg) {
     ext.exec("tst-select-first-child-tab", arg, ev);
-}, 'Select first child tab'', true);
+}, 'Select first child tab'';
 
 key.setViewKey(['t', '$'], function (ev, arg) {
     ext.exec("tst-select-last-child-tab", arg, ev);
-}, 'Select last child tab', true);
+}, 'Select last child tab');
 
 key.setViewKey('^', function (ev, arg) {
     ext.exec("tst-select-first-sibling-tab", arg, ev);
@@ -124,31 +124,31 @@ key.setViewKey('$', function (ev, arg) {
 
 key.setViewKey('H', function (ev, arg) {
     ext.exec("tst-select-previous-sibling-tab", arg, ev);
-}, 'Select previous sibling tab', true);
+}, 'Select previous sibling tab');
 
 key.setViewKey('L', function (ev, arg) {
     ext.exec("tst-select-next-sibling-tab", arg, ev);
-}, 'Select next sibling tab', true);
+}, 'Select next sibling tab');
 
 key.setViewKey(['t', 'p'], function (ev, arg) {
     ext.exec("tst-read-selected-tab-later", arg, ev);
-}, 'Read selected tab later', true);
+}, 'Read selected tab later');
 
 key.setGlobalKey('C-P', function (ev, arg) {
     ext.exec('tst-move-selected-tab-left', arg, ev);
-}, 'Move selected tab(s) left', true);
+}, 'Move selected tab(s) left');
 
 key.setGlobalKey('C-N', function (ev, arg) {
     ext.exec('tst-move-selected-tab-right', arg, ev);
-}, 'Move selected tab(s) right', true);
+}, 'Move selected tab(s) right');
 
 key.setGlobalKey('C-B', function (ev, arg) {
     ext.exec("tst-promote-tab", arg, ev);
-}, 'Move selected tab(s) to upper hierarchy', true);
+}, 'Move selected tab(s) to upper hierarchy');
 
 key.setGlobalKey('C-F', function (ev, arg) {
     ext.exec("tst-demote-tab", arg, ev);
-}, 'Move selected tab(s) to lower hierarchy', true);
+}, 'Move selected tab(s) to lower hierarchy');
 
 key.setViewKey(['t', 'SPC'], function (ev, arg) {
     ext.exec("tst-toggle-collapse-expand-tree", arg, ev);
@@ -164,9 +164,13 @@ key.setViewKey(['t', 't'], function (ev, arg) {
 
 // ChangeLog
 //
+// ==== 1.0.2 (2010/09/14) ====
+//
+// * Fix PLUGIN_INFO (key binding example)
+//
 // ==== 1.0.1 (2010/09/10) ====
 //
-// * Fix PLUGIN_INFO
+// * Fix PLUGIN_INFO (description)
 //
 // ==== 1.0.0 (2010/09/09) ====
 //
