@@ -10,136 +10,6 @@ var PLUGIN_INFO =
   <license lang="ja">MIT ライセンス</license>
   <include>main</include>
   <minVersion>1.8.2</minVersion>
-  <detail lang="ja"><![CDATA[
-=== 使いかた ===
-
-    タブの操作に便利なエクステ (コマンド) を追加します．
-    ツリー型タブ https://addons.mozilla.org/ja/firefox/addon/5890/ がインストールされていると，ツリー構造に基づいてタブを操作するエクステ (tst-*) も利用できるようになります．
-
-    .keysnail.js に以下のような設定を記述することにより，特定のキーにエクステを割り当てることもできます．
-
->||
-key.setViewKey(['U'], function (ev, arg) {
-    ext.exec("tst-select-parent-tab", arg, ev);
-}, '親タブを選択する');
-
-key.setViewKey(['t', '^'], function (ev, arg) {
-    ext.exec("tst-select-first-child-tab", arg, ev);
-}, '最初の子タブを選択する');
-
-key.setViewKey(['t', '$'], function (ev, arg) {
-    ext.exec("tst-select-last-child-tab", arg, ev);
-}, '最後の子タブを選択する');
-
-key.setViewKey('^', function (ev, arg) {
-    ext.exec("tst-select-first-sibling-tab", arg, ev);
-}, '最初の兄弟タブを選択する', true);
-
-key.setViewKey('$', function (ev, arg) {
-    ext.exec("tst-select-last-sibling-tab", arg, ev);
-}, '最後の兄弟タブを選択する', true);
-
-key.setViewKey('H', function (ev, arg) {
-    ext.exec("tst-select-previous-sibling-tab", arg, ev);
-}, '前の兄弟タブを選択する');
-
-key.setViewKey('L', function (ev, arg) {
-    ext.exec("tst-select-next-sibling-tab", arg, ev);
-}, '次の兄弟タブを選択する');
-
-key.setViewKey(['t', 'p'], function (ev, arg) {
-    ext.exec("tst-read-selected-tab-later", arg, ev);
-}, '選択中のタブを後回しにする');
-
-key.setGlobalKey('C-P', function (ev, arg) {
-    ext.exec('tst-move-selected-tab-left', arg, ev);
-}, '選択中のタブを左へ移動する');
-
-key.setGlobalKey('C-N', function (ev, arg) {
-    ext.exec('tst-move-selected-tab-right', arg, ev);
-}, '選択中のタブを右へ移動する');
-
-key.setGlobalKey('C-B', function (ev, arg) {
-    ext.exec("tst-promote-tab", arg, ev);
-}, '選択中のタブを1つ上の階層に移動する');
-
-key.setGlobalKey('C-F', function (ev, arg) {
-    ext.exec("tst-demote-tab", arg, ev);
-}, '選択中のタブを1つ下の階層に移動する');
-
-key.setViewKey(['t', 'SPC'], function (ev, arg) {
-    ext.exec("tst-toggle-collapse-expand-tree", arg, ev);
-}, 'タブの折りたたみをトグル', true);
-
-key.setViewKey(['t', 't'], function (ev, arg) {
-    ext.exec("tst-toggle-autohide-tabbar", arg, ev);
-}, 'タブバーの表示をトグル', true);
-||<
-  ]]></detail>
-  <detail><![CDATA[
-=== Usage ===
-    You can use exts (commands) to manipulate tabs.
-    If you installed Tree Style Tab https://addons.mozilla.org/ja/firefox/addon/5890/ , you can also use exts to manipulate tree structure of tabs (tst-*).
-
-    Key bind examples are below. Paste code below to your .keysnail.js file.
->||
-key.setViewKey(['U'], function (ev, arg) {
-    ext.exec("tst-select-parent-tab", arg, ev);
-}, 'Select parent tab');
-
-key.setViewKey(['t', '^'], function (ev, arg) {
-    ext.exec("tst-select-first-child-tab", arg, ev);
-}, 'Select first child tab'';
-
-key.setViewKey(['t', '$'], function (ev, arg) {
-    ext.exec("tst-select-last-child-tab", arg, ev);
-}, 'Select last child tab');
-
-key.setViewKey('^', function (ev, arg) {
-    ext.exec("tst-select-first-sibling-tab", arg, ev);
-}, 'Select first sibling tab', true);
-
-key.setViewKey('$', function (ev, arg) {
-    ext.exec("tst-select-last-sibling-tab", arg, ev);
-}, 'Select last sibling tab', true);
-
-key.setViewKey('H', function (ev, arg) {
-    ext.exec("tst-select-previous-sibling-tab", arg, ev);
-}, 'Select previous sibling tab');
-
-key.setViewKey('L', function (ev, arg) {
-    ext.exec("tst-select-next-sibling-tab", arg, ev);
-}, 'Select next sibling tab');
-
-key.setViewKey(['t', 'p'], function (ev, arg) {
-    ext.exec("tst-read-selected-tab-later", arg, ev);
-}, 'Read selected tab later');
-
-key.setGlobalKey('C-P', function (ev, arg) {
-    ext.exec('tst-move-selected-tab-left', arg, ev);
-}, 'Move selected tab(s) left');
-
-key.setGlobalKey('C-N', function (ev, arg) {
-    ext.exec('tst-move-selected-tab-right', arg, ev);
-}, 'Move selected tab(s) right');
-
-key.setGlobalKey('C-B', function (ev, arg) {
-    ext.exec("tst-promote-tab", arg, ev);
-}, 'Move selected tab(s) to upper hierarchy');
-
-key.setGlobalKey('C-F', function (ev, arg) {
-    ext.exec("tst-demote-tab", arg, ev);
-}, 'Move selected tab(s) to lower hierarchy');
-
-key.setViewKey(['t', 'SPC'], function (ev, arg) {
-    ext.exec("tst-toggle-collapse-expand-tree", arg, ev);
-}, 'Toggle selected tree between collapsed and expanded', true);
-
-key.setViewKey(['t', 't'], function (ev, arg) {
-    ext.exec("tst-toggle-autohide-tabbar", arg, ev);
-}, 'Toggle tab bar between expanded and shrunken', true);
-||<
-]]></detail>
 </KeySnailPlugin>;
 
 
@@ -305,3 +175,62 @@ plugins.withProvides(function(provide) {
            en: 'Toggle tab bar between expanded and shrunken' }), true);
   }
 }, PLUGIN_INFO);
+
+const SampleBinding = "\n>||\n" + [
+  ["View", "U", "tst-select-parent-tab"],
+  ["View", ["t", "^"], "tst-select-first-child-tab"],
+  ["View", ["t", "$"], "tst-select-last-child-tab"],
+  ["View", "^", "tst-select-first-sibling-tab", true],
+  ["View", "$", "tst-select-last-sibling-tab", true],
+  ["View", "H", "tst-select-previous-sibling-tab"],
+  ["View", "L", "tst-select-next-sibling-tab"],
+  ["View", ["t", "p"], "tst-read-selected-tab-later"],
+  ["Global", "C-P", "tst-move-selected-tab-left"],
+  ["Global", "C-N", "tst-move-selected-tab-right"],
+  ["Global", "C-B", "tst-promote-tab"],
+  ["Global", "C-F", "tst-demote-tab"],
+  ["View", ["t", "SPC"], "tst-toggle-collapse-expand-tree", true],
+  ["View", ["t", "t"], "tst-toggle-autohide-tabbar", true]
+].map(function([aMap, aKey, aExt, aNoRepeat]) {
+  let description = ext.description(aExt);
+
+  if (description === "")
+    return "";
+
+  return util.format(
+    "key.set%sKey(%s, function(ev, arg) {\n"
+      + "  ext.exec(%s, arg, ev);\n"
+      + "}, %s%s);",
+    aMap, uneval(aKey), uneval(aExt), description,
+    aNoRepeat ? ", true" : "");
+}).join("\n\n") + "\n||<\n";
+
+function addDetail(aDetail, aLang) {
+  aDetail = L(aDetail).replace(/#SampleBinding/g, SampleBinding);
+  let element = <detail/>;
+  if (aLang !== undefined)
+    element.@lang = aLang;
+  element.appendChild(new XML("<![CDATA[" + aDetail + "]]>"));
+  PLUGIN_INFO.appendChild(element);
+}
+
+addDetail(<><![CDATA[
+=== 使いかた ===
+
+    タブの操作に便利なエクステ (コマンド) を追加します．
+    ツリー型タブ https://addons.mozilla.org/ja/firefox/addon/5890/ がインストールされていると，ツリー構造に基づいてタブを操作するエクステ (tst-*) も利用できるようになります．
+
+    .keysnail.js に以下のような設定を記述することにより，特定のキーにエクステを割り当てることもできます．
+
+    #SampleBinding
+]]></>.toString(), "ja" );
+
+addDetail(<><![CDATA[
+=== Usage ===
+    You can use exts (commands) to manipulate tabs.
+    If you installed Tree Style Tab https://addons.mozilla.org/ja/firefox/addon/5890/ , you can also use exts to manipulate tree structure of tabs (tst-*).
+
+    Key bind examples are below. Paste code below to your .keysnail.js file.
+
+    #SampleBinding
+]]></>.toString());
