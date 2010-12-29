@@ -1,34 +1,15 @@
 var PLUGIN_INFO =
-  <KeySnailPlugin>
-    <name>TabSnail</name>
-    <description>Manipulate tabs with keysnail</description>
-    <description lang="ja">キーボードでタブを操作</description>
-    <version>1.0.2</version>
-    <updateURL>http://github.com/gifnksm/TabSnail/raw/master/tabsnail.ks.js</updateURL>
-    <author mail="makoto.nksm@gmail.com" homepage="http://d.hatena.ne.jp/gifnksm/">gifnksm</author>
-    <license>The MIT License</license>
-    <license lang="ja">MIT ライセンス</license>
-    <include>main</include>
-    <provides>
-      <ext>select-first-tab</ext>
-      <ext>select-last-tab</ext>
-      <ext>tst-select-parent-tab</ext>
-      <ext>tst-select-first-child-tab</ext>
-      <ext>tst-select-last-child-tab</ext>
-      <ext>tst-select-first-sibling-tab</ext>
-      <ext>tst-select-last-sibling-tab</ext>
-      <ext>tst-select-previous-sibling-tab</ext>
-      <ext>tst-select-next-sibling-tab</ext>
-      <ext>read-selected-tab-later</ext>
-      <ext>tst-read-selected-tab-later</ext>
-      <ext>tst-move-selected-tab-left</ext>
-      <ext>tst-move-selected-tab-right</ext>
-      <ext>tst-promote-tab</ext>
-      <ext>tst-demote-tab</ext>
-      <ext>tst-toggle-collapse-expand-tree</ext>
-      <ext>tst-toggle-autohide-tabbar</ext>
-    </provides>
-  <minVersion>1.6.5</minVersion>
+<KeySnailPlugin>
+  <name>TabSnail</name>
+  <description>Manipulate tabs with keysnail</description>
+  <description lang="ja">キーボードでタブを操作</description>
+  <version>1.0.2</version>
+  <updateURL>http://github.com/gifnksm/TabSnail/raw/master/tabsnail.ks.js</updateURL>
+  <author mail="makoto.nksm@gmail.com" homepage="http://d.hatena.ne.jp/gifnksm/">gifnksm</author>
+  <license>The MIT License</license>
+  <license lang="ja">MIT ライセンス</license>
+  <include>main</include>
+  <minVersion>1.8.2</minVersion>
   <detail lang="ja"><![CDATA[
 === 使いかた ===
 
@@ -158,11 +139,15 @@ key.setViewKey(['t', 't'], function (ev, arg) {
     ext.exec("tst-toggle-autohide-tabbar", arg, ev);
 }, 'Toggle tab bar between expanded and shrunken', true);
 ||<
-  ]]></detail>
+]]></detail>
 </KeySnailPlugin>;
 
 
 // ChangeLog
+//
+// ==== 1.0.3 (2010/09/14) ====
+//
+// * Fix PLUGIN_INFO (using plugins.withProvides)
 //
 // ==== 1.0.2 (2010/09/14) ====
 //
@@ -211,48 +196,45 @@ const SelectedTab = {
 };
 
 
-
-// タブの選択
-{
-  ext.add('select-first-tab', function(aEvent, aArgument) {
+plugins.withProvides(function(provide) {
+  // タブの選択
+  provide('select-first-tab', function(aEvent, aArgument) {
     gBrowser.mTabContainer.selectedIndex = 0;
   }, M({ ja: '最初のタブを選択する', en: 'Select first tab' }));
 
-  ext.add('select-last-tab', function(aEvent, aArgument) {
+  provide('select-last-tab', function(aEvent, aArgument) {
     gBrowser.mTabContainer.selectedIndex = gBrowser.mTabs.length - 1;
   }, M({ ja: '最後のタブを選択する', en: 'Select last tab' }));
 
   if (tstEnabled) {
-    ext.add('tst-select-parent-tab', function(aEvent, aArgument) {
+    provide('tst-select-parent-tab', function(aEvent, aArgument) {
       SelectedTab.tab = SelectedTab.parent;
     }, M({ ja: '親タブを選択する', en: 'Select parent tab' }));
 
-    ext.add('tst-select-first-child-tab', function(aEvent, aArgument) {
+    provide('tst-select-first-child-tab', function(aEvent, aArgument) {
       SelectedTab.tab = SelectedTab.firstChild;
     }, M({ ja: '最初の子タブを選択する', en: 'Select first child tab' }));
-    ext.add('tst-select-last-child-tab', function(aEvent, aArgument) {
+    provide('tst-select-last-child-tab', function(aEvent, aArgument) {
       SelectedTab.tab = SelectedTab.lastChild;
     }, M({ ja: '最後の子タブを選択する', en: 'Select last child tab' }));
 
-    ext.add('tst-select-first-sibling-tab', function(aEvent, aArgument) {
+    provide('tst-select-first-sibling-tab', function(aEvent, aArgument) {
       SelectedTab.tab = SelectedTab.firstSibling;
     }, M({ ja: '最初の兄弟タブを選択する', en: 'Select first sibling tab' }));
-    ext.add('tst-select-last-sibling-tab', function(aEvent, aArgument) {
+    provide('tst-select-last-sibling-tab', function(aEvent, aArgument) {
       SelectedTab.tab = SelectedTab.lastSibling;
     }, M({ ja: '最後の兄弟タブを選択する', en: 'Select last sibling tab' }));
 
-    ext.add('tst-select-previous-sibling-tab', function(aEvent, aArgument) {
+    provide('tst-select-previous-sibling-tab', function(aEvent, aArgument) {
       SelectedTab.tab = SelectedTab.previousSibling || SelectedTab.lastSibling;
     }, M({ ja: '前の兄弟タブを選択する', en: 'Select previous sibling tab' }));
-    ext.add('tst-select-next-sibling-tab', function(aEvent, aArgument) {
+    provide('tst-select-next-sibling-tab', function(aEvent, aArgument) {
       SelectedTab.tab = SelectedTab.nextSibling || SelectedTab.firstSibling;
     }, M({ ja: '次の兄弟タブを選択する', en: 'Select next sibling tab' }));
   }
-}
 
-// タブの移動
-{
-  ext.add('read-selected-tab-later', function(aEvent, aArgument) {
+  // タブの移動
+  provide('read-selected-tab-later', function(aEvent, aArgument) {
     let pos = gBrowser._tPos;
     gBrowser.moveTabTo(gBrowser.mCurrentTab,
                        gBrowser.mTabContainer.childNodes.length - 1);
@@ -260,9 +242,9 @@ const SelectedTab = {
   }, M({ ja: '選択中のタブを後回しにする', en: 'Read selected tab later' }));
 
   if (tstEnabled) {
-    ext.add('tst-read-selected-tab-later', function(aEvent, aArgument) {
+    provide('tst-read-selected-tab-later', function(aEvent, aArgument) {
       let current = SelectedTab.tab,
-          pos = current._tPos,
+      pos = current._tPos,
           target = SelectedTab.lastSibling;
       if (TSTS.hasChildTabs(target)) {
         // 選択中のタブに子が無いとき何故か動かない
@@ -274,11 +256,11 @@ const SelectedTab = {
       SelectedTab.tab = gBrowser.mTabs[pos];
     }, M({ ja: '選択中のタブを後回しにする', en: 'Read selected tab later' }));
 
-    ext.add('tst-move-selected-tab-left', function(aEvent, aArgument) {
+    provide('tst-move-selected-tab-left', function(aEvent, aArgument) {
       let target = SelectedTab.previousSibling || SelectedTab.lastSibling;
       gBrowser.moveTabTo(SelectedTab.tab, target._tPos);
     }, M({ ja: '選択中のタブを左へ移動する', en: 'Move selected tab(s) left' }));
-    ext.add('tst-move-selected-tab-right', function(aEvent, aArgument) {
+    provide('tst-move-selected-tab-right', function(aEvent, aArgument) {
       let target = SelectedTab.nextSibling || SelectedTab.firstSibling;
       if (TSTS.hasChildTabs(target)) {
         // 選択中のタブに子が無いとき何故か動かない
@@ -289,21 +271,19 @@ const SelectedTab = {
       gBrowser.moveTabTo(SelectedTab.tab, target._tPos);
     }, M({ ja: '選択中のタブを右へ移動する', en: 'Move selected tab(s) right' }));
 
-    ext.add('tst-promote-tab', function(aEvent, aArgument) {
+    provide('tst-promote-tab', function(aEvent, aArgument) {
       TSTS.promoteCurrentTab();
     }, M({ ja: '選択中のタブを1つ上の階層に移動する',
            en: 'Move selected tab(s) to upper hierarchy' }));
-    ext.add('tst-demote-tab', function(aEvent, aArgument) {
+    provide('tst-demote-tab', function(aEvent, aArgument) {
       TSTS.demoteCurrentTab();
     }, M({ ja: '選択中のタブを1つ下の階層に移動する',
            en: 'Move selected tab(s) to lower hierarchy'  }));
   }
-}
 
-// タブバーの状態
-{
+  // タブバーの状態
   if (tstEnabled) {
-    ext.add('tst-toggle-collapse-expand-tree', function (aEvent, aArgument) {
+    provide('tst-toggle-collapse-expand-tree', function (aEvent, aArgument) {
       let target = TSTS.hasChildTabs(SelectedTab.tab)
         ? SelectedTab.tab
         : SelectedTab.parent;
@@ -315,7 +295,7 @@ const SelectedTab = {
     }, M({ ja: 'タブの折りたたみをトグル',
            en: 'Toggle selected tree between collapsed and expanded' }));
 
-    ext.add('tst-toggle-autohide-tabbar', function (aEvent, aArgument) {
+    provide('tst-toggle-autohide-tabbar', function (aEvent, aArgument) {
       const ah = gBrowser.treeStyleTab.autoHide;
       if (ah.state == "shrunken")
         ah.show();
@@ -324,4 +304,4 @@ const SelectedTab = {
     }, M({ ja: 'タブバーの表示をトグル',
            en: 'Toggle tab bar between expanded and shrunken' }), true);
   }
-}
+}, PLUGIN_INFO);
