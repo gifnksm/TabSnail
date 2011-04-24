@@ -200,7 +200,7 @@ const SampleBinding = "\n>||\n" + [
   return util.format(
     "key.set%sKey(%s, function(ev, arg) {\n"
       + "  ext.exec(%s, arg, ev);\n"
-      + "}, %s%s);",
+      + "}, '%s'%s);",
     aMap, uneval(aKey), uneval(aExt), description,
     aNoRepeat ? ", true" : "");
 }).join("\n\n") + "\n||<\n";
