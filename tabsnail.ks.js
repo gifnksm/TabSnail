@@ -15,6 +15,10 @@ var PLUGIN_INFO =
 
 // ChangeLog
 //
+// ==== 1.0.5 (2012/09/02) ====
+//
+// * Add 'tst-select-root-tab', 'tst-move-root-tab-left', 'tst-move-root-tab-right'
+//
 // ==== 1.0.4 (2011/04/24) ====
 //
 // * Fix PLUGIN_INFO (fix keybinding samples, thanks to azu)
@@ -40,7 +44,6 @@ var PLUGIN_INFO =
 const tstEnabled = 'TreeStyleTabService' in window;
 const TSTS = tstEnabled ? TreeStyleTabService : null;
 
-
 const SelectedTab = {
   get tab() gBrowser.selectedTab,
   set tab(value) {
@@ -49,6 +52,7 @@ const SelectedTab = {
     return gBrowser.selectedTab;
   },
   get parent() TSTS.getParentTab(SelectedTab.tab),
+  get root() TSTS.getRootTab(SelectedTab.tab),
   get firstChild() TSTS.getFirstChildTab(SelectedTab.tab),
   get lastChild() TSTS.getLastChildTab(SelectedTab.tab),
   get firstSibling() {
@@ -84,6 +88,9 @@ plugins.withProvides(function(provide) {
     provide('tst-select-parent-tab', function(aEvent, aArgument) {
       SelectedTab.tab = SelectedTab.parent;
     }, M({ ja: '親タブを選択する', en: 'Select parent tab' }));
+    provide('tst-select-root-tab', function(aEvent, aArgument) {
+      SelectedTab.tab = SelectedTab.root;
+    }, M({ ja: 'ルートタブを選択する', en: 'Select root tab' }));
 
     provide('tst-select-first-child-tab', function(aEvent, aArgument) {
       SelectedTab.tab = SelectedTab.firstChild;
@@ -118,8 +125,8 @@ plugins.withProvides(function(provide) {
   if (tstEnabled) {
     provide('tst-read-selected-tab-later', function(aEvent, aArgument) {
       let current = SelectedTab.tab,
-      pos = current._tPos,
-          target = SelectedTab.lastSibling;
+          pos     = current._tPos,
+          target  = SelectedTab.lastSibling;
       if (TSTS.hasChildTabs(target)) {
         // 選択中のタブに子が無いとき何故か動かない
         // target = TSTS.getLastDescendantTab(target);
@@ -144,6 +151,20 @@ plugins.withProvides(function(provide) {
       }
       gBrowser.moveTabTo(SelectedTab.tab, target._tPos);
     }, M({ ja: '選択中のタブを右へ移動する', en: 'Move selected tab(s) right' }));
+
+    provide('tst-move-root-tab-left', function(aEvent, aArgument) {
+      let root = SelectedTab.root;
+      let target = TSTS.getPreviousSiblingTab(root);
+      gBrowser.treeStyleTab.moveTabs([root], target);
+    }, M({ ja: '選択中のタブのルートタブを左へ移動する', en: 'Move selected tab\'s root left' }));
+    provide('tst-move-root-tab-right', function(aEvent, aArgument) {
+      let root = SelectedTab.root;
+      let target = TSTS.getNextSiblingTab(TSTS.getNextSiblingTab(root));
+      if (target === null)
+        TSTS.getFirstSibling(root);
+      gBrowser.treeStyleTab.moveTabs([root], target);
+    }, M({ ja: '選択中のタブのルートタブを右へ移動する', en: 'Move selected tab\'s root right' }));
+
 
     provide('tst-promote-tab', function(aEvent, aArgument) {
       TSTS.promoteCurrentTab();
@@ -182,6 +203,7 @@ plugins.withProvides(function(provide) {
 
 const SampleBinding = "\n>||\n" + [
   ["View", "U", "tst-select-parent-tab"],
+  ["View", "C-U", "tst-select-root-tab"],
   ["View", ["t", "^"], "tst-select-first-child-tab"],
   ["View", ["t", "$"], "tst-select-last-child-tab"],
   ["View", "^", "tst-select-first-sibling-tab", true],
@@ -191,6 +213,8 @@ const SampleBinding = "\n>||\n" + [
   ["View", ["t", "p"], "tst-read-selected-tab-later"],
   ["Global", "C-P", "tst-move-selected-tab-left"],
   ["Global", "C-N", "tst-move-selected-tab-right"],
+  ["Global", "C-M-P", "tst-move-root-tab-left"],
+  ["Global", "C-M-N", "tst-move-root-tab-right"],
   ["Global", "C-B", "tst-promote-tab"],
   ["Global", "C-F", "tst-demote-tab"],
   ["View", ["t", "SPC"], "tst-toggle-collapse-expand-tree", true],
