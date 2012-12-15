@@ -3,7 +3,7 @@ var PLUGIN_INFO =
   <name>TabSnail</name>
   <description>Manipulate tabs with keysnail</description>
   <description lang="ja">キーボードでタブを操作</description>
-  <version>1.0.5</version>
+  <version>1.0.6</version>
   <updateURL>http://github.com/gifnksm/TabSnail/raw/master/tabsnail.ks.js</updateURL>
   <author mail="makoto.nksm@gmail.com" homepage="http://d.hatena.ne.jp/gifnksm/">gifnksm</author>
   <license>The MIT License</license>
