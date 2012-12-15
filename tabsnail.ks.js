@@ -15,6 +15,11 @@ var PLUGIN_INFO =
 
 // ChangeLog
 //
+// ==== 1.0.6 (2012/12/15) ====
+//
+// * Fix 'tst-togle-autohide-tabbar' (thanks to Michael Heerdegen)
+//   It works properly now, even if TST's Auto hide mode is "Auto Hide tab bar".
+//
 // ==== 1.0.5 (2012/09/02) ====
 //
 // * Add 'tst-select-root-tab', 'tst-move-root-tab-left', 'tst-move-root-tab-right'
@@ -192,7 +197,7 @@ plugins.withProvides(function(provide) {
 
     provide('tst-toggle-autohide-tabbar', function (aEvent, aArgument) {
       const ah = gBrowser.treeStyleTab.autoHide;
-      if (ah.state == "shrunken")
+      if (ah.state == "shrunken" || ah.state == "hidden")
         ah.show();
       else
         ah.hide();
