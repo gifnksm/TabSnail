@@ -12,6 +12,7 @@ var PLUGIN_INFO =
   <minVersion>1.8.2</minVersion>
 </KeySnailPlugin>;
 
+// TODO: create "new" documentation, possibly fix existing documentation
 
 // ChangeLog
 //
@@ -205,65 +206,3 @@ plugins.withProvides(function(provide) {
            en: 'Toggle tab bar between expanded and shrunken' }), true);
   }
 }, PLUGIN_INFO);
-
-const SampleBinding = "\n>||\n" + [
-  ["View", "U", "tst-select-parent-tab"],
-  ["View", "C-U", "tst-select-root-tab"],
-  ["View", ["t", "^"], "tst-select-first-child-tab"],
-  ["View", ["t", "$"], "tst-select-last-child-tab"],
-  ["View", "^", "tst-select-first-sibling-tab", true],
-  ["View", "$", "tst-select-last-sibling-tab", true],
-  ["View", "H", "tst-select-previous-sibling-tab"],
-  ["View", "L", "tst-select-next-sibling-tab"],
-  ["View", ["t", "p"], "tst-read-selected-tab-later"],
-  ["Global", "C-P", "tst-move-selected-tab-left"],
-  ["Global", "C-N", "tst-move-selected-tab-right"],
-  ["Global", "C-M-P", "tst-move-root-tab-left"],
-  ["Global", "C-M-N", "tst-move-root-tab-right"],
-  ["Global", "C-B", "tst-promote-tab"],
-  ["Global", "C-F", "tst-demote-tab"],
-  ["View", ["t", "SPC"], "tst-toggle-collapse-expand-tree", true],
-  ["View", ["t", "t"], "tst-toggle-autohide-tabbar", true]
-].map(function([aMap, aKey, aExt, aNoRepeat]) {
-  let description = ext.description(aExt);
-
-  if (description === "")
-    return "";
-
-  return util.format(
-    "key.set%sKey(%s, function(ev, arg) {\n"
-      + "  ext.exec(%s, arg, ev);\n"
-      + "}, '%s'%s);",
-    aMap, uneval(aKey), uneval(aExt), description,
-    aNoRepeat ? ", true" : "");
-}).join("\n\n") + "\n||<\n";
-
-function addDetail(aDetail, aLang) {
-  aDetail = L(aDetail).replace(/#SampleBinding/g, SampleBinding);
-  let element = <detail/>;
-  if (aLang !== undefined)
-    element.@lang = aLang;
-  element.appendChild(new XML("<![CDATA[" + aDetail + "]]>"));
-  PLUGIN_INFO.appendChild(element);
-}
-
-addDetail(<><![CDATA[
-=== 使いかた ===
-
-    タブの操作に便利なエクステ (コマンド) を追加します．
-    ツリー型タブ https://addons.mozilla.org/ja/firefox/addon/5890/ がインストールされていると，ツリー構造に基づいてタブを操作するエクステ (tst-*) も利用できるようになります．
-
-    .keysnail.js に以下のような設定を記述することにより，特定のキーにエクステを割り当てることもできます．
-
-    #SampleBinding
-]]></>.toString(), "ja" );
-
-addDetail(<><![CDATA[
-=== Usage ===
-    You can use exts (commands) to manipulate tabs.
-    If you installed Tree Style Tab https://addons.mozilla.org/ja/firefox/addon/5890/ , you can also use exts to manipulate tree structure of tabs (tst-*).
-
-    Key bind examples are below. Paste code below to your .keysnail.js file.
-
-    #SampleBinding
-]]></>.toString());
